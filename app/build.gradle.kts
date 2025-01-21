@@ -48,9 +48,15 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.junit.ktx)
     testImplementation(libs.junit)
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
 
 }

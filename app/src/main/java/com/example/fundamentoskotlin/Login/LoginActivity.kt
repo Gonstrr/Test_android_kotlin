@@ -1,23 +1,16 @@
 package com.example.fundamentoskotlin.Login
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.fundamentoskotlin.Home.HomeActivity
-import com.example.fundamentoskotlin.R
 import com.example.fundamentoskotlin.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityLoginBinding
 
-
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -25,50 +18,34 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         binding.buttonlogin.setOnClickListener {
-            ValidandoCampos() // Llamando a la funcion de validacion de campos
+            validarCampos() // Nombre en español y camelCase
         }
-
-
-
-
-
-
-
     }
 
-
-    private fun TransicionPage(){
+    private fun navegarAHome() { // Nombre más descriptivo
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
-
+        finish() // Para cerrar la activity actual
     }
 
-
-
-
-
-    private fun ValidandoCampos(){
-        val email = binding.IDTxtEmail25.text.toString()
+    fun validarCampos() {
+        val email = binding.IDTxtEmail25.text.toString().trim() // Agregar trim()
         val password = binding.IdTxtPassword25.text.toString()
 
-        if(email.isEmpty()){
-            binding.IDTxtEmail25.error = "El email es requerido"
-            return
+        when {
+            !email.contains("@") -> {
+                binding.IDTxtEmail25.error = "Ingrese un email válido"
+            }
+            email.isEmpty() -> {
+                binding.IDTxtEmail25.error = "El email es requerido"
+            }
+            password.isEmpty() -> {
+                binding.IdTxtPassword25.error = "La contraseña es requerida"
+            }
+            password.length < 6 -> {
+                binding.IdTxtPassword25.error = "La contraseña debe tener al menos 6 caracteres"
+            }
+            else -> navegarAHome()
         }
-
-        if(password.isEmpty()){
-            binding.IdTxtPassword25.error = "La contraseña es requerida"
-            return
-        }
-
-        if(password.length < 6){
-            binding.IdTxtPassword25.error = "La contraseña debe tener al menos 6 caracteres"
-            return
-        }
-
-        TransicionPage()
-
     }
-
-
 }
